@@ -191,12 +191,22 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    return _.reduce(collection, function(accumulator,element) {
+      if (!accumulator) {
+        return false;
+      } else {
+        return iterator === undefined ? element : iterator(element) ? true : false;
+      }
+    },true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    return !_.every(collection, function(element) {
+      return iterator === undefined ? !element : !iterator(element);
+    });
   };
 
 
@@ -219,6 +229,11 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    /*_.each(arguments,function(objects,index) {
+      _.each(objects[index+1},function(object,i) {
+        obj[i] = object[i];
+      }]);
+    });*/
   };
 
   // Like extend, but doesn't ever overwrite a key that already
